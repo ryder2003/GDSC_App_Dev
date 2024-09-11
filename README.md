@@ -1,10 +1,14 @@
 # GDSC App Dev Submission
 
+## Task
+[View PDF File](https://github.com/blackhat-coder21/GDSC_App_Dev/blob/main/AppD_Tasks.pdf)
+
+## Submission Instructions
 **Name:** Ankit  
 **Roll Number:** 12345678  
 
 ## Project Description
-This is a simple app that allows users to sign in, sign up, and upload profile photos. The app is developed using Swift and Firebase.
+This is a simple app that allows users to sign in, sign up, and upload profile photos. The app is developed using Flutter and Firebase.
 
 ## Features
 - Login and Signup
