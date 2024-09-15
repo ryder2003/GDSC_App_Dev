@@ -6,24 +6,24 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:gdsc_gallery/modals/galleryuser.dart';
 
 class APIs {
-  //For authentication
+  // For authentication
   static FirebaseAuth auth = FirebaseAuth.instance;
 
-  //for accessing cloud firestore databse
+  // For accessing Cloud Firestore database
   static FirebaseFirestore firestore = FirebaseFirestore.instance;
 
-  //for accessing cloud firebase Storage
+  // For accessing Cloud Firebase Storage
   static FirebaseStorage storage = FirebaseStorage.instance;
 
-  //For storing self information
+  // For storing self information
   static late GalleryUser me;
 
-  //To return current user
-  static User get user =>auth.currentUser!;
+  // To return current user
+  static User get user => auth.currentUser!;
 
-  //For checking user exists or not
-  static Future<bool> userExists() async{
-    return (await firestore.collection('users').doc(auth.currentUser!.uid).get()).exists; //exclamation mark to ensure here that current user is not null
+  // For checking if the user exists
+  static Future<bool> userExists() async {
+    return (await firestore.collection('users').doc(auth.currentUser!.uid).get()).exists;
   }
 
   //For getting info of current user
@@ -39,7 +39,7 @@ class APIs {
     });
   }
 
-  //To create new user
+  // To create a new user
   static Future<void> createUser() async {
     final galleryUser = GalleryUser(
         image: user.photoURL.toString(),
@@ -51,37 +51,37 @@ class APIs {
     return await firestore.collection('users').doc(user.uid).set(galleryUser.toJson());
   }
 
-  //To update user's personal info
-  static Future<void> updateUSerInfo() async{
+  // To update user's personal info
+  static Future<void> updateUserInfo() async {
     await firestore.collection('users').doc(user.uid).update({
       'name': me.name,
     });
   }
 
-  //Update Profile Picture of User
-  static Future<void> updateProfilePicture(File file) async{
-    //Getting image final extension
-    final ext = file.path.split('.').last; //This will return the string after '.'\
+  // For getting all users from Firestore database
+  static Stream<QuerySnapshot<Map<String, dynamic>>> getAllUsers() {
+    return firestore.collection('users').where('id', isNotEqualTo: user.uid).snapshots();
+  }
+
+  // Update profile picture of the user
+  static Future<void> updateProfilePicture(File file) async {
+    final ext = file.path.split('.').last;
     print("Extension: $ext");
 
-    //Storage final reference with path
     final ref = storage.ref().child('profile_pictures/${user.uid}.$ext');
 
-    //Uploading image
-    await ref.putFile(file, SettableMetadata(contentType: "image/$ext")).then((p0){
+    await ref.putFile(file, SettableMetadata(contentType: "image/$ext")).then((p0) {
       print('Data Transferred: ${p0.bytesTransferred / 1000} kb');
     });
 
-    //Updating image in firebase database
     me.image = await ref.getDownloadURL();
-    await firestore. collection('users').doc(user.uid).update({
+    await firestore.collection('users').doc(user.uid).update({
       'image': me.image
     });
   }
 
-  //Apply Customised Colour
-  static Color hexToColor(String hexCode){
-    return Color(int.parse(hexCode.substring(1, 7),radix: 16) + 0xFF000000);
+  // Apply customized color
+  static Color hexToColor(String hexCode) {
+    return Color(int.parse(hexCode.substring(1, 7), radix: 16) + 0xFF000000);
   }
-
 }

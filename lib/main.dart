@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/services.dart';
+import 'package:gdsc_gallery/screens/login_screen.dart';
+import 'package:gdsc_gallery/screens/nav.dart';
+import 'package:gdsc_gallery/screens/splash_screen.dart';
 import 'firebase_options.dart';
 
 //Global object for accessing Screen Size
@@ -43,7 +46,7 @@ class MyApp extends StatelessWidget {
                   fontWeight: FontWeight.normal)
           )
       ),
-      home: Scaffold(),
+      home: SplashScreen(),
     );
   }
 }
