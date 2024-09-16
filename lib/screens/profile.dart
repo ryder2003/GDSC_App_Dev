@@ -100,10 +100,10 @@ class ProfileScreenState extends State<ProfileScreen> {
                         height: mq.size.height * .03,
                         child: MaterialButton(
                           onPressed: _showBottomSheet,
-                          child: const Icon(Icons.edit, color: Colors.orange, size: 20),
                           color: Colors.grey,
                           shape: const CircleBorder(),
                           elevation: 1,
+                          child: const Icon(Icons.edit, color: Colors.orange, size: 20),
                         ),
                       ),
                     ],

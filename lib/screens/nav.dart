@@ -16,6 +16,7 @@ class _BottomNavState extends State<BottomNav> {
   late HomeScreen home_screen;
   late ProfileScreen profile;
   int currentTabIndex = 0;
+  bool _isInitialized = false; // Add a flag to track initialization
 
   @override
   void initState() {
@@ -30,11 +31,20 @@ class _BottomNavState extends State<BottomNav> {
       home_screen = HomeScreen();
       profile = ProfileScreen(user: APIs.me);
       Pages = [home_screen, profile];
+      _isInitialized = true; // Set the flag to true when initialization is complete
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    // Check if Pages have been initialized
+    if (!_isInitialized) {
+      // Return a loader or some placeholder UI until initialization is complete
+      return Scaffold(
+        body: Center(child: CircularProgressIndicator()), // Show loading indicator
+      );
+    }
+
     return Scaffold(
       bottomNavigationBar: SafeArea(
         child: CurvedNavigationBar(
@@ -53,7 +63,8 @@ class _BottomNavState extends State<BottomNav> {
           ],
         ),
       ),
-      body: Pages[currentTabIndex],
+      body: Pages[currentTabIndex], // Use Pages here after checking it's initialized
     );
   }
 }
+

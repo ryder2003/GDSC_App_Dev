@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/services.dart';
-import 'package:gdsc_gallery/screens/login_screen.dart';
-import 'package:gdsc_gallery/screens/nav.dart';
+import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:gdsc_gallery/screens/splash_screen.dart';
 import 'firebase_options.dart';
 
 //Global object for accessing Screen Size
 late Size mq;
 
-void main() {
+void main() async{
   WidgetsFlutterBinding.ensureInitialized();
+  await FlutterDownloader.initialize();
 
   //To show splash screen to full screen
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);

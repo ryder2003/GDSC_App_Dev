@@ -30,5 +30,3 @@ class GalleryUser {
     return data;
   }
 }
-
-
