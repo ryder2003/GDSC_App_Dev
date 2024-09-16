@@ -8,7 +8,7 @@ import '../modals/galleryuser.dart';
 import 'gallery_user_card.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+  const HomeScreen({super.key});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -79,6 +79,9 @@ class _HomeScreenState extends State<HomeScreen> {
       setState(() {
         _image = null;
       });
+
+      // Refresh gallery to reflect the new image
+      await _fetchGallery();
 
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Image Uploaded Successfully!')),

@@ -63,8 +63,9 @@ class FullScreenImage extends StatelessWidget {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Image deleted successfully!')),
       );
-      onDelete(); // Refresh the gallery
-      Navigator.pop(context);
+
+      onDelete(); // This will trigger the refresh
+      Navigator.pop(context); // Close the full-screen view
     } catch (e) {
       print('Error deleting image: $e');
       ScaffoldMessenger.of(context).showSnackBar(
@@ -88,6 +89,12 @@ class FullScreenImage extends StatelessWidget {
             child: Image.network(
               user!.image,
               fit: BoxFit.contain,
+              loadingBuilder: (context, child, loadingProgress) {
+                if (loadingProgress == null) return child;
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              },
               errorBuilder: (context, error, stackTrace) {
                 return const Icon(Icons.broken_image, size: 50, color: Colors.grey);
               },
@@ -115,7 +122,7 @@ class FullScreenImage extends StatelessWidget {
                   onPressed: () => _deleteImage(context, user!.image),
                   style: ElevatedButton.styleFrom(
                     padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                    backgroundColor: Colors.redAccent,
+                    backgroundColor: Colors.red,
                   ),
                 ),
               ],

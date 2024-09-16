@@ -7,10 +7,10 @@ class GalleryUserCard extends StatelessWidget {
   final Function onDelete;
 
   const GalleryUserCard({
-    Key? key,
+    super.key,
     required this.user,
     required this.onDelete,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +36,6 @@ class GalleryUserCard extends StatelessWidget {
                 },
               ),
             ),
-            // Remove unnecessary name or other information
           ],
         ),
       ),
