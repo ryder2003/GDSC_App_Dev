@@ -5,7 +5,6 @@ import 'package:gdsc_gallery/screens/nav.dart';
 
 import '../api/apis.dart';
 import '../main.dart';
-import 'home_screen.dart';
 import 'login_screen.dart';
 
 class SplashScreen extends StatefulWidget{
@@ -51,25 +50,25 @@ class SplashScreenState extends State<SplashScreen>{
 
     return Scaffold(
       body: Container(
-        color: hexToColor('#00264d'),
+        color: hexToColor('#ffe6cc'),
         child: Stack(
           children: [
 
             Positioned(
-              top: mq.height * .4,
+              top: mq.height * .34,
               width: mq.width * .45,
-              right: mq.width * .24,
-              child: Image.asset('assets/images/phone.png'),
+              right: mq.width * .27,
+              child: Image.asset('assets/images/storage_drive.png'),
             ),
             Positioned(
-              bottom: mq.height * .12,
+              bottom: mq.height * .11,
               left: mq.width * .4,
               width: mq.width,
               child: Text("Made By",style: TextStyle(
                   fontSize:25,
-                  fontWeight: FontWeight.w100,
+                  fontWeight: FontWeight.w500,
                   fontFamily: 'Font1',
-                  color: hexToColor('#85adad')
+                  color: Colors.black
               ),),
             ),
             Positioned(
@@ -77,10 +76,10 @@ class SplashScreenState extends State<SplashScreen>{
               left: mq.width * .45,
               width: mq.width,
               child: Text("®",style: TextStyle(
-                  fontSize: 80,
+                  fontSize: 75,
                   fontWeight: FontWeight.bold,
                   fontFamily: 'Font1',
-                  color: hexToColor("#85adad")
+                  color: Colors.black
               ),),
             ),
           ],

@@ -30,32 +30,112 @@ class _LoginState extends State<Login> {
   final _formkey= GlobalKey<FormState>();
 
   userLogin() async {
-    email = emailController.text;
-    password = passwordController.text;
+    email = emailController.text.trim();
+    password = passwordController.text.trim();
 
     try {
-      UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password);
+      UserCredential userCredential = await FirebaseAuth.instance
+          .signInWithEmailAndPassword(email: email, password: password);
 
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           backgroundColor: Colors.greenAccent,
           content: Text("Login Successfully",
               style: TextStyle(color: Colors.black, fontSize: 16))));
 
-      Navigator.push(context, MaterialPageRoute(builder: (context) => BottomNav()));
-    } on FirebaseException catch (e) {
-      if (e.code == "user-not-found") {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            backgroundColor: Colors.greenAccent,
-            content: Text("user not registered",
-                style: TextStyle(color: Colors.black, fontSize: 16))));
-      }else if(e.code=="wrong-password") {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            backgroundColor: Colors.greenAccent,
-            content: Text("wrong-password",
-                style: TextStyle(color: Colors.black, fontSize: 16))));
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (context) => BottomNav()));
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found') {
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              backgroundColor: Colors.redAccent,
+              title: Text(
+                "Error",
+                style: TextStyle(color: Colors.black),
+              ),
+              content: Text(
+                "User not registered",
+                style: TextStyle(color: Colors.black, fontSize: 16),
+              ),
+              actions: <Widget>[
+                TextButton(
+                  child: Text(
+                    "OK",
+                    style: TextStyle(color: Colors.black),
+                  ),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ],
+            );
+          },
+        );
+      } else if (e.code == 'wrong-password') {
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              backgroundColor: Colors.redAccent,
+              title: Text(
+                "Error",
+                style: TextStyle(color: Colors.black),
+              ),
+              content: Text(
+                "Wrong Password",
+                style: TextStyle(color: Colors.black, fontSize: 16),
+              ),
+              actions: <Widget>[
+                TextButton(
+                  child: Text(
+                    "OK",
+                    style: TextStyle(color: Colors.black),
+                  ),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ],
+            );
+          },
+        );
+      } else {
+        // For any other errors, you can show a generic error dialog
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              backgroundColor: Colors.redAccent,
+              title: Text(
+                "Error",
+                style: TextStyle(color: Colors.black),
+              ),
+              content: Text(
+                "Something went wrong: ${e.message}",
+                style: TextStyle(color: Colors.black, fontSize: 16),
+              ),
+              actions: <Widget>[
+                TextButton(
+                  child: Text(
+                    "OK",
+                    style: TextStyle(color: Colors.black),
+                  ),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ],
+            );
+          },
+        );
       }
+    } catch (e) {
+      print("Error: $e");
     }
   }
+
 
   //***************Google Login*************************
   _handleGoogleButtonClick(){

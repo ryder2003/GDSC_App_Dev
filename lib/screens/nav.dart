@@ -36,20 +36,22 @@ class _BottomNavState extends State<BottomNav> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: CurvedNavigationBar(
-        height: 70,
-        backgroundColor: const Color(0xfff2f2f2),
-        color: Colors.black,
-        animationDuration: const Duration(milliseconds: 500),
-        onTap: (int index) {
-          setState(() {
-            currentTabIndex = index;
-          });
-        },
-        items: const [
-          Icon(Icons.home_outlined, color: Colors.white),
-          Icon(Icons.person_outlined, color: Colors.white),
-        ],
+      bottomNavigationBar: SafeArea(
+        child: CurvedNavigationBar(
+          height: 70,
+          backgroundColor: const Color(0xfff2f2f2),
+          color: Colors.black,
+          animationDuration: const Duration(milliseconds: 500),
+          onTap: (int index) {
+            setState(() {
+              currentTabIndex = index;
+            });
+          },
+          items: const [
+            Icon(Icons.home_outlined, color: Colors.white),
+            Icon(Icons.person_outlined, color: Colors.white),
+          ],
+        ),
       ),
       body: Pages[currentTabIndex],
     );

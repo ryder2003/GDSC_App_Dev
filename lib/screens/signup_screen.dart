@@ -27,9 +27,9 @@ class _SignupState extends State<Signup> {
   final _formkey = GlobalKey<FormState>();
 
   registration() async{
-    name = nameController.text;
-    email = emailController.text;
-    password=passwordController.text;
+    name = nameController.text.trim();
+    email = emailController.text.trim();
+    password=passwordController.text.trim();
 
     if (password!=null && name!=null && email!=null){
       try{
